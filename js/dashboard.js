@@ -101,9 +101,9 @@ function generateRecommendationsList(complaints) {
     const openWater = complaints.filter(c => c.category === 'water' && c.status !== 'resolved' && c.status !== 'Resolved').length;
     
     if (openWater > 0) {
-        recommendations.push(`Paani se judi ${openWater} shikayatein abhi bhi pending hain. Jaldi action lein!`);
+        recommendations.push(`There are still ${openWater} pending water-related complaints. Please take action!`);
     }
-    recommendations.push("Lab mein bijli ki khapat kam karne ke liye LED bulbs ka upyog karein.");
+    recommendations.push("Use LED bulbs in the lab to reduce electricity consumption.");
 
     return recommendations.map(rec => `<p class="rec-item" style="margin: 8px 0;">• ${rec}</p>`).join('');
 }
