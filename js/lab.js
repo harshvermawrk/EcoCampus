@@ -200,8 +200,8 @@ function setupRecyclingSearch() {
             entry.category.toLowerCase().includes(query)
         );
 
-        if (filtered.length === 0) {
-            resultsContainer.innerHTML = '<p>Koi matching item nahi mila.</p>';
+         if (filtered.length === 0) {
+            resultsContainer.innerHTML = '<p>No item matching .</p>';
             return;
         }
 
