@@ -2,14 +2,23 @@
 document.addEventListener("DOMContentLoaded", () => {
   const pages = document.querySelectorAll(".page");
   const links = document.querySelectorAll(".nav-link");
+  const pageNames = new Set(["dashboard", "complaints", "lab"]);
 
   function showPage(name) {
+    if (!pageNames.has(name)) return;
+
     pages.forEach(page => {
       page.hidden = page.id !== `${name}-page`;
     });
 
     links.forEach(link => {
-      link.classList.toggle("active", link.dataset.page === name);
+      const isCurrent = link.dataset.page === name;
+      link.classList.toggle("active", isCurrent);
+      if (isCurrent) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
     });
 
     if (name === "dashboard" &&
@@ -34,7 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  document.querySelector(".brand").addEventListener("click", event => {
+  const brand = document.querySelector(".brand");
+  brand?.addEventListener("click", event => {
     event.preventDefault();
     showPage("dashboard");
   });

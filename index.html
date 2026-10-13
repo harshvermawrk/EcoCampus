@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A browser-based campus sustainability demo for reporting issues, tracking resource use, and building greener habits.">
+  <meta name="theme-color" content="#116638">
   <title>EcoCampus | Sustainable Campus</title>
   <link rel="stylesheet" href="css/style.css">
 
@@ -15,35 +17,37 @@
   <script defer src="js/main.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
   <header class="topbar">
-    <a href="#" class="brand" data-page="dashboard">🌱 EcoCampus</a>
-    <span class="demo-badge">DEMO MODE</span>
+    <a href="#dashboard-page" class="brand" data-page="dashboard">🌱 EcoCampus</a>
+    <span class="demo-badge" aria-label="Demo mode">DEMO MODE</span>
   </header>
 
   <div class="app-layout">
-    <nav class="sidebar">
-      <button class="nav-link active" data-page="dashboard">Dashboard</button>
-      <button class="nav-link" data-page="complaints">Green Complaint Box</button>
-      <button class="nav-link" data-page="lab">Sustainable Lab</button>
+    <nav class="sidebar" aria-label="Main navigation">
+      <button class="nav-link active" data-page="dashboard" aria-controls="dashboard-page" aria-current="page">Dashboard</button>
+      <button class="nav-link" data-page="complaints" aria-controls="complaints-page">Green Complaint Box</button>
+      <button class="nav-link" data-page="lab" aria-controls="lab-page">Sustainable Lab</button>
     </nav>
 
-    <main class="main-content">
-      <div class="demo-notice">
+    <main id="main-content" class="main-content" tabindex="-1">
+      <div class="demo-notice" role="note">
         Demo data is simulated, not live campus measurements.
       </div>
 
-      <section id="dashboard-page" class="page">
-        <h1>Sustainability Dashboard</h1>
+      <section id="dashboard-page" class="page" aria-labelledby="dashboard-title">
+        <h1 id="dashboard-title">Sustainability Dashboard</h1>
         <div id="dashboard-root"></div>
       </section>
 
-      <section id="complaints-page" class="page" hidden>
-        <h1>Green Complaint Box</h1>
+      <section id="complaints-page" class="page" aria-labelledby="complaints-title" hidden>
+        <h1 id="complaints-title">Green Complaint Box</h1>
         <div id="complaints-root"></div>
       </section>
 
-      <section id="lab-page" class="page" hidden>
-        <h1>Sustainable Lab</h1>
+      <section id="lab-page" class="page" aria-labelledby="lab-title" hidden>
+        <h1 id="lab-title">Sustainable Lab</h1>
         <div id="lab-root"></div>
       </section>
     </main>

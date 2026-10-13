@@ -27,9 +27,9 @@ The application currently focuses on three main areas:
 ## ✨ Features
 
 ### 📊 Dashboard
-- Access the main sections of EcoCampus.
-- Navigate between sustainability features.
-- View the information and progress provided by the application.
+- View complaint totals by status and the latest campus reports.
+- Read practical sustainability tips.
+- Navigate between project sections.
 
 ### 🌿 Green Complaint Box
 - Report campus issues related to water, electricity, waste, plastic, and other sustainability concerns.
@@ -42,10 +42,10 @@ The application currently focuses on three main areas:
 - Save and retrieve complaint data using browser local storage.
 
 ### ♻️ Sustainable Lab
-- Explore sustainability guide cards.
-- Complete green challenges.
-- Track challenge progress.
-- Retain challenge progress across page reloads using browser storage.
+- Record dated water and electricity readings and view totals and recent entries.
+- Search a recycling guide by item or material.
+- Complete green challenges and retain progress across page reloads.
+- Explore sustainability guides for water, energy, and waste.
 
 ## 🛠️ Tech Stack
 
@@ -54,7 +54,7 @@ The application currently focuses on three main areas:
 | HTML5 | Page structure |
 | CSS3 | Styling and responsive interface |
 | JavaScript | Application logic and interactions |
-| Browser Local Storage | Local persistence of application data |
+| Browser `localStorage` | Local persistence of reports, readings, and challenge progress |
 | Git | Version control |
 | GitHub | Source code hosting |
 
@@ -87,10 +87,10 @@ git clone https://github.com/harshvermawrk/EcoCampus.git
 cd EcoCampus
 ```
 
-If you already have a local copy, navigate to it instead:
+If you already have a local copy, navigate to that project folder instead:
 
 ```powershell
-cd C:\Users\dell\EcoCampus
+cd <path-to-EcoCampus>
 ```
 
 ### 2. Get the latest changes
@@ -152,6 +152,8 @@ git diff --check
 - [ ] Complaint status can be updated.
 - [ ] Complaint data remains after a page reload.
 - [ ] Sustainable Lab guide cards appear.
+- [ ] Water and electricity readings can be added and totals update.
+- [ ] Recycling search returns matching items.
 - [ ] Green challenge progress updates and persists.
 - [ ] All main sections remain accessible.
 
@@ -159,6 +161,8 @@ git diff --check
 
 EcoCampus currently uses browser `localStorage` for local persistence.
 
+- A small set of sample reports and resource readings is added once in an empty
+  browser so the demo has examples to explore. Existing entries are not replaced.
 - Data is stored in the browser on the device where the application is used.
 - Different devices and browsers do not automatically share complaint records or challenge progress.
 - Clearing browser storage can remove locally saved data.
@@ -172,18 +176,20 @@ A future version could introduce a backend and shared database to support cross-
 EcoCampus/
 ├── index.html
 ├── css/
-│   └── ...
+│   └── style.css
 ├── js/
 │   ├── storage.js
+│   ├── seed.js
 │   ├── dashboard.js
 │   ├── complaints.js
 │   ├── lab.js
 │   └── main.js
+├── .gitignore
 ├── README.md
-└── ...
+└── index.html
 ```
 
-This is an overview of the main files. Refer to the repository for the complete and current directory structure.
+The project uses plain HTML, CSS, and JavaScript with no package install or build step.
 
 ## 🔄 Git and GitHub Workflow
 

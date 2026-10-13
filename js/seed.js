@@ -1,108 +1,70 @@
 "use strict";
 
-const DEMO_COMPLAINTS = [
+const demoComplaints = [
   {
     title: "Leaking tap near the washroom",
     category: "water",
     location: "Block B",
-    description: "The tap continues leaking when not in use.",
-    reporterRole: "student",
-    isDemo: true
+    description: "The tap continues leaking when it is not in use.",
+    reporterRole: "student"
   },
   {
     title: "Lights left on in an empty lab",
     category: "electricity",
     location: "Lab 2",
     description: "Lights remain on after the lab is empty.",
-    reporterRole: "teacher",
-    isDemo: true
+    reporterRole: "teacher"
   },
   {
     title: "Recycling bin overflowing",
     category: "waste",
     location: "Block A",
     description: "The recycling bin needs to be emptied.",
-    reporterRole: "student",
-    isDemo: true
+    reporterRole: "student"
   }
 ];
 
-const DEMO_RESOURCES = [
-  {
-    id: "RES-DEMO-001",
-    resource: "water",
-    location: "Block A",
-    amount: 120,
-    unit: "litres",
-    recordedAt: "2026-10-10",
-    isDemo: true
-  },
-  {
-    id: "RES-DEMO-002",
-    resource: "water",
-    location: "Block B",
-    amount: 95,
-    unit: "litres",
-    recordedAt: "2026-10-11",
-    isDemo: true
-  },
-  {
-    id: "RES-DEMO-003",
-    resource: "electricity",
-    location: "Lab 2",
-    amount: 45,
-    unit: "kWh",
-    recordedAt: "2026-10-10",
-    isDemo: true
-  },
-  {
-    id: "RES-DEMO-004",
-    resource: "electricity",
-    location: "Block A",
-    amount: 38,
-    unit: "kWh",
-    recordedAt: "2026-10-11",
-    isDemo: true
-  }
+const demoResourceReadings = [
+  { type: "water", amount: 120, daysAgo: 3 },
+  { type: "water", amount: 95, daysAgo: 2 },
+  { type: "electricity", amount: 45, daysAgo: 3 },
+  { type: "electricity", amount: 38, daysAgo: 2 }
 ];
 
 function seedDemoData() {
-  const data = getAppData();
+  try {
+    const data = getAppData();
 
-  // Prevent duplicate demo records.
-  if (
-    data.complaints.some(item => item.isDemo === true) ||
-    data.resources.some(item => item.isDemo === true)
-  ) {
-    console.log("EcoCampus demo data already exists.");
-    return;
+    // Seed only a completely empty browser so existing entries are untouched.
+    if (data.complaints.length > 0 || data.resources.length > 0) return;
+
+    const seededComplaints = demoComplaints.map(addComplaint);
+    addResourceReadings();
+
+    updateComplaintStatus(seededComplaints[1].id, "in-progress");
+    updateComplaintStatus(seededComplaints[2].id, "resolved");
+  } catch (error) {
+    console.warn("Could not add EcoCampus demo data.", error);
   }
-
-  // Add demo complaints.
-  DEMO_COMPLAINTS.forEach(complaint => {
-    addComplaint(complaint);
-  });
-
-  // Add demo resource records.
-  DEMO_RESOURCES.forEach(record => {
-    addResourceRecord(record);
-  });
-
-  // Give the demo complaints different statuses.
-  const updatedData = getAppData();
-  const demoComplaints = updatedData.complaints.filter(
-    item => item.isDemo === true
-  );
-
-  if (demoComplaints.length >= 3) {
-    updateComplaintStatus(demoComplaints[1].id, "in-progress");
-    updateComplaintStatus(demoComplaints[2].id, "resolved");
-  }
-
-  console.log("EcoCampus demo data added successfully.");
 }
 
-// Run after storage.js has loaded.
-if (typeof getAppData === "function") {
-  seedDemoData();
+function addResourceReadings() {
+  demoResourceReadings.forEach(reading => {
+    addResourceRecord({
+      type: reading.type,
+      amount: reading.amount,
+      date: getDemoDate(reading.daysAgo)
+    });
+  });
 }
+
+function getDemoDate(daysAgo) {
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+seedDemoData();
